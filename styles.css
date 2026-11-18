@@ -1,0 +1,157 @@
+:root {
+  --rojo: #b3202a;
+  --rojo-oscuro: #7d1219;
+  --verde: #14532d;
+  --verde-claro: #1f7a45;
+  --dorado: #f2c14e;
+  --crema: #fff8e7;
+  --gris: #6b7280;
+  --cherry: #D2042D;
+
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--crema);
+  background: radial-gradient(farthest-corner, var(--crema), var(--cherry) 70%, #FD8CA3);
+  padding: 0 5px 5px;
+}
+
+.cabecera { text-align: center; padding: 32px 0 16px; }
+.cabecera h1 { margin: 0; font-size: clamp(1.8rem, 5vw, 3rem); text-shadow: 0 2px 6px rgba(0,0,0,.4); }
+.subtitulo { margin: 10px 0 0; opacity: 5; }
+
+.cuenta {
+  display: inline-block;
+  margin: 14px 0 0;
+  padding: 8px 20px;
+  border: 2px solid var(--dorado);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, .25);
+  color: var(--dorado);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.cuenta strong { font-size: 1.6rem; color: #fff; }
+
+/* ---------- Calendario ---------- */
+.calendario {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  max-width: 1300px;
+  margin: 10px auto 0;
+}
+
+.dia {
+  position: relative;
+  aspect-ratio: 1;
+  border: 3px solid var(--dorado);
+  border-radius: 14px;
+  background: linear-gradient(145deg, var(--rojo), var(--rojo-oscuro));
+  color: var(black);
+  font-size: 2rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-shadow: 0 6px 14px rgba(0,0,0,.35);
+  transition: transform .2s, box-shadow .2s;
+}
+
+
+.dia:hover:not(.bloqueado) { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 10px 20px rgba(0,0,0,.45); }
+.dia:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+.dia .candado { font-size: 2rem; }
+.dia .sin-contenido { font-size: .65rem; font-weight: 400; opacity: .8; }
+
+
+.dia.bloqueado {
+  background: linear-gradient(145deg, var(--dorado), #6d650a);
+  border-color: black;
+  color: #cbd5e1;
+  cursor: not-allowed;
+
+}
+
+.dia.hoy { animation: pulso 1.8s infinite; border-color: #fff; }
+.dia.abierto { background: linear-gradient(145deg, var(--dorado), #d99a1b); color: var(--rojo-oscuro); }
+
+@keyframes pulso {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(242,193,78,.7); }
+  50% { box-shadow: 0 0 0 12px rgba(242,193,78,0); }
+}
+
+.dia.sacudir { animation: sacudir .4s; }
+@keyframes sacudir {
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* En modo admin, los bloqueados se pueden editar */
+body.admin .dia.bloqueado { cursor: pointer; }
+
+/* ---------- Modal ---------- */
+.modal {
+  width: min(92vw, 520px);
+  border: 4px solid var(--dorado);
+  border-radius: 16px;
+  background: var(--crema);
+  color: #1f2937;
+  padding: 24px;
+}
+.modal::backdrop { background: rgba(0,0,0,.65); }
+.modal h2 { margin-top: 0; color: var(--rojo); }
+.modal img { max-width: 100%; border-radius: 10px; margin: 8px 0; }
+.modal-dia { margin: 0; color: var(--gris); font-weight: 600; text-transform: uppercase; font-size: .8rem; }
+.modal a {
+  display: inline-block; margin-top: 8px; padding: 8px 14px;
+  background: var(--verde); color: #fff; border-radius: 8px; text-decoration: none;
+}
+.cerrar {
+  position: absolute; top: 10px; right: 12px; border: 0; background: transparent;
+  font-size: 1.3rem; cursor: pointer; color: var(--gris);
+}
+
+.modal-form label { display: block; margin-bottom: 12px; font-weight: 600; font-size: .9rem; }
+.modal-form input, .modal-form textarea {
+  display: block; width: 100%; margin-top: 4px; padding: 8px;
+  border: 1px solid #cbd5e1; border-radius: 8px; font: inherit;
+}
+
+/* ---------- Panel admin ---------- */
+.panel-admin {
+  max-width: 900px; margin: 0 auto; padding: 16px 20px;
+  background: rgba(0,0,0,.3); border: 2px dashed var(--dorado); border-radius: 12px;
+}
+.panel-admin h2 { margin-top: 0; }
+.acciones-admin { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+
+button, .btn-archivo {
+  padding: 9px 16px; border: 0; border-radius: 8px; cursor: pointer;
+  background: var(--dorado); color: var(--rojo-oscuro); font-weight: 700; font-size: .9rem;
+}
+button.secundario { background: transparent; color: inherit; border: 2px solid currentColor; }
+.modal button.secundario { color: var(--gris); }
+
+/* ---------- Nieve ---------- */
+.nieve { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+.copo {
+  position: absolute; top: -20px; color: #fff; opacity: .8;
+  animation: caer linear infinite;
+}
+@keyframes caer { to { transform: translateY(110vh) rotate(360deg); } }
+
+main, .cabecera, .panel-admin { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dia.hoy, .copo { animation: none; }
+}

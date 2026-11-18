@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendario de Adviento</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="cabecera">
+    <h1>Calendario de Adviento para la Mejor Esposa</h1>
+    <p id="estado-fecha" class="subtitulo"></p>
+    <p id="cuenta-regresiva" class="cuenta" aria-live="polite"></p>
+  </header>
+
+  <!-- Panel de edición (solo visible con ?admin=1) -->
+  <section id="panel-admin" class="panel-admin" hidden>
+    <h2>Modo edición</h2>
+    <p>Haz clic en un día para cargar su contenido. Los cambios se guardan en este navegador; cuando termines, pulsa <strong>Exportar</strong> y sube el archivo <code>contenido.json</code> a tu web.</p>
+    <div class="acciones-admin">
+      <button id="btn-exportar" type="button">⬇ Exportar contenido.json</button>
+      <label class="btn-archivo">⬆ Importar JSON
+        <input id="input-importar" type="file" accept="application/json" hidden>
+      </label>
+      <button id="btn-borrar-borrador" type="button" class="secundario">Descartar cambios locales</button>
+    </div>
+  </section>
+
+  <main>
+    <div id="calendario" class="calendario" aria-label="Días del calendario de adviento"></div>
+  </main>
+
+  <!-- Ventana con el contenido del día -->
+  <dialog id="modal" class="modal">
+    <form method="dialog"><button class="cerrar" aria-label="Cerrar">✕</button></form>
+    <div id="modal-vista">
+      <p id="modal-dia" class="modal-dia"></p>
+      <h2 id="modal-titulo"></h2>
+      <img id="modal-imagen" alt="" hidden>
+      <p id="modal-texto"></p>
+      <a id="modal-enlace" href="#" target="_blank" rel="noopener noreferrer" hidden></a>
+      <button id="btn-editar" type="button" class="secundario" hidden>✏️ Editar este día</button>
+    </div>
+
+    <form id="modal-form" class="modal-form" hidden>
+      <h2 id="form-titulo-dia"></h2>
+      <label>Título <input id="f-titulo" type="text" maxlength="80"></label>
+      <label>Mensaje <textarea id="f-texto" rows="5"></textarea></label>
+      <label>URL de imagen (opcional) <input id="f-imagen" type="url" placeholder="https://... o imagenes/dia1.jpg"></label>
+      <label>Enlace (opcional) <input id="f-enlace" type="url" placeholder="https://..."></label>
+      <label>Texto del enlace <input id="f-enlace-texto" type="text" maxlength="60" placeholder="Ver más"></label>
+      <div class="acciones-admin">
+        <button type="submit">Guardar</button>
+        <button type="button" id="btn-cancelar" class="secundario">Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="nieve" aria-hidden="true"></div>
+  <script src="script.js"></script>
+</body>
+</html>

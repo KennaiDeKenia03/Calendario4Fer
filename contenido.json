@@ -1,0 +1,16 @@
+{
+  "1": {
+    "titulo": "Darling, I keep falling in love with you.",
+    "texto": "Holaa, amor",
+    "imagen": "",
+    "enlace": "",
+    "enlaceTexto": ""
+  },
+  "2": {
+    "titulo": "Un pequeño detalle",
+    "texto": "Aquí puedes escribir un mensaje, una receta, una foto o un enlace.",
+    "imagen": "",
+    "enlace": "https://example.com",
+    "enlaceTexto": "Ver más"
+  }
+}
